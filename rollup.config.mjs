@@ -3,16 +3,18 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { dts } from "rollup-plugin-dts";
 
+const libName = "rfid-utils"
+
 export default [
   {
     input: 'src/main.ts',  // 入口文件
     output: [
       {
-        file: 'dist/rfid-utils.cjs.js',
+        file: `dist/${libName}.js`,
         format: 'cjs',  // CommonJS 格式
       },
       {
-        file: 'dist/rfid-utils.esm.js',
+        file: `dist/${libName}.mjs`,
         format: 'es',  // ES Module 格式
       }
     ],
@@ -26,7 +28,7 @@ export default [
     input: 'src/main.ts',  // 入口文件
     output: [
       {
-        file: 'dist/rfid-utils.d.ts',
+        file: `dist/${libName}.d.ts`,
         format: 'es',  // CommonJS 格式
       },
     ],
