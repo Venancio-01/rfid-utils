@@ -1,3 +1,10 @@
+export function generateCommand(command: string) {
+  const FH = "5A";
+  const body = command;
+  const checkCode = generateCRC16Code(body).padStart(4, "0");
+
+  return Buffer.from(FH + body + checkCode, "hex");
+}
 // 生成二进制字符串
 export function generateBinaryString(numbers: number[]): string {
   // 创建一个长度为32的数组，元素全为0
@@ -58,7 +65,7 @@ export function generateCRC16Code(command: string) {
     wCRC = ((wCRC << 8) ^ CRC_CCITT_table[((wCRC >> 8) ^ chChar) & 0xff]) & 0xffff;
   }
   // 将CRC16校验码转换为16进制字符串
-  return wCRC.toString(16);
+  return wCRC.toString(16).padStart(4, "0");
 }
 
 // 解析RFID报告数据
@@ -96,7 +103,7 @@ export function getTIDByReportData(data: string) {
   // 定义一个中间命令长度的常量
   const MidCommandLength = 16;
 
-  // 将传入的数据中的前缀字符串替换掉
+  // 将传入的数据中的前缀字符删除
   str = str.replace(PREFIX, "");
 
   // 定义一个EPC长度的变量，并将传入的数据中的EPC长度转换为16进制
@@ -107,6 +114,24 @@ export function getTIDByReportData(data: string) {
   // 定义一个TID变量，并将传入的数据中的TID取出
   const TID = str.substring(8 + EPCLength + MidCommandLength + TIDLengthCommandLength, 8 + EPCLength + MidCommandLength + TIDLengthCommandLength + TIDLength);
 
+  const antennaIdStr = str.slice(8 + EPCLength + 4, 8 + EPCLength + 4 + 2);
+
+  const antennaId = hexToBinaryPosition(antennaIdStr);
+
   // 返回TID
-  return TID;
+  return {
+    TID,
+    antennaId,
+  };
+}
+
+function hexToBinaryPosition(hexString: string) {
+  // 将十六进制字符串转换为二进制字符串
+  const binaryStringList = parseInt(hexString, 16).toString(2).split("").reverse();
+
+  // 找到二进制中第一个 '1' 出现的位置
+  const position = binaryStringList.indexOf("1") + 1;
+
+  // 返回 '1' 的位置
+  return position;
 }

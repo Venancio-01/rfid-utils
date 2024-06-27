@@ -1,4 +1,8 @@
-import { generateAntennaCommand, generateCRC16Code, getTIDByReportData, parseRFIDReportData } from "./utils";
+// import { generateAntennaCommand, generateCRC16Code, generateCommand, getTIDByReportData, parseRFIDReportData } from "./utils";
+import { generateAntennaCommand, generateCRC16Code, generateCommand, getTIDByReportData } from "./utils";
+import { uniq, uniqBy } from "lodash-es";
+
+export * from "./utils";
 
 /**
  * 生成启动命令
@@ -34,9 +38,43 @@ export function generateStopCommand(): Buffer {
  * @param {string} data
  * @return {*}  {string[]}
  */
-export function getTIDList(data: string): string[] {
-  const reportData = parseRFIDReportData(data);
-  const TIDList = [...new Set(reportData.map(item => getTIDByReportData(item)))];
+export function getTIDList(data: string, antennaIds?: number[]): string[] {
+  // const reportData = parseRFIDReportData(data);
+  const reportData = [data];
 
-  return TIDList;
+  if (!antennaIds) {
+    const TIDList = uniq(reportData.map(item => getTIDByReportData(item).TID));
+
+    return TIDList;
+  } else {
+    const allData = reportData.map(item => getTIDByReportData(item));
+    console.log('🚀 - getTIDList - allData:', allData)
+    const filteredData = allData.filter(item => antennaIds.includes(item.antennaId));
+    console.log('🚀 - getTIDList - filteredData:', filteredData)
+    const TIDList = uniqBy(filteredData,'TID').map(item => item.TID);
+
+    return TIDList;
+  }
 }
+
+export function generateCheckConnectionStatusCommand(count: number) {
+  const protocolControlWord = "00011112";
+  const dataLength = "0004";
+  const body = count.toString(16).padStart(8, "0");
+  const str = protocolControlWord + dataLength + body;
+
+  return generateCommand(str);
+}
+
+
+const result1 = getTIDList('5a000112000029000c300833b2ddd90140000000003400020104020003000ce280110c2000774978240a8b08000dd9e634c1',[1])
+console.log('🚀 - result1:', result1)
+
+const result2 = getTIDList('5a000112000029000c300833b2ddd90140000000003400020104020003000ce280110c2000774978240a8b08000dd9e634c1',[2])
+console.log('🚀 - result2:', result2)
+
+const result3 = getTIDList('5a000112000029000c300833b2ddd90140000000003400020104020003000ce280110c2000774978240a8b08000dd9e634c1')
+console.log('🚀 - result3:', result3)
+
+
+
