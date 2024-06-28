@@ -48,9 +48,7 @@ export function getTIDList(data: string, antennaIds?: number[]): string[] {
     return TIDList;
   } else {
     const allData = reportData.map(item => getTIDByReportData(item));
-    console.log('🚀 - getTIDList - allData:', allData)
     const filteredData = allData.filter(item => antennaIds.includes(item.antennaId));
-    console.log('🚀 - getTIDList - filteredData:', filteredData)
     const TIDList = uniqBy(filteredData,'TID').map(item => item.TID);
 
     return TIDList;
@@ -65,16 +63,3 @@ export function generateCheckConnectionStatusCommand(count: number) {
 
   return generateCommand(str);
 }
-
-
-const result1 = getTIDList('5a000112000029000c300833b2ddd90140000000003400020104020003000ce280110c2000774978240a8b08000dd9e634c1',[1])
-console.log('🚀 - result1:', result1)
-
-const result2 = getTIDList('5a000112000029000c300833b2ddd90140000000003400020104020003000ce280110c2000774978240a8b08000dd9e634c1',[2])
-console.log('🚀 - result2:', result2)
-
-const result3 = getTIDList('5a000112000029000c300833b2ddd90140000000003400020104020003000ce280110c2000774978240a8b08000dd9e634c1')
-console.log('🚀 - result3:', result3)
-
-
-
