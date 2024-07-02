@@ -1,5 +1,4 @@
-// import { generateAntennaCommand, generateCRC16Code, generateCommand, getTIDByReportData, parseRFIDReportData } from "./utils";
-import { generateAntennaCommand, generateCRC16Code, generateCommand, getTIDByReportData } from "./utils";
+import { generateAntennaCommand, generateCRC16Code, generateCommand, getTIDByReportData, parseRFIDReportData } from "./utils";
 import { uniq, uniqBy } from "lodash-es";
 
 export * from "./utils";
@@ -39,8 +38,7 @@ export function generateStopCommand(): Buffer {
  * @return {*}  {string[]}
  */
 export function getTIDList(data: string, antennaIds?: number[]): string[] {
-  // const reportData = parseRFIDReportData(data);
-  const reportData = [data];
+  const reportData = parseRFIDReportData(data);
 
   if (!antennaIds) {
     const TIDList = uniq(reportData.map(item => getTIDByReportData(item).TID));

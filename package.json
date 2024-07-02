@@ -4,7 +4,7 @@
   "description": "A utility library for RFID operations in TypeScript.",
   "author": "liqingshan",
   "license": "MIT",
-  "version": "0.0.6",
+  "version": "0.0.10",
   "type": "module",
   "types": "./dist/rfid-utils.d.ts",
   "main": "./dist/rfid-utils.js",

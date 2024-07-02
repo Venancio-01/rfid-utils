@@ -115,8 +115,11 @@ export function getTIDByReportData(data: string) {
   const TID = str.substring(8 + EPCLength + MidCommandLength + TIDLengthCommandLength, 8 + EPCLength + MidCommandLength + TIDLengthCommandLength + TIDLength);
 
   const antennaIdStr = str.slice(8 + EPCLength + 4, 8 + EPCLength + 4 + 2);
+  console.log('🚀 - getTIDByReportData - antennaIdStr:', antennaIdStr)
 
-  const antennaId = hexToBinaryPosition(antennaIdStr);
+  // const antennaId = hexToBinaryPosition(antennaIdStr);
+  const antennaId = parseInt(antennaIdStr)
+  console.log('🚀 - getTIDByReportData - antennaId:', antennaId)
 
   // 返回TID
   return {
@@ -125,13 +128,18 @@ export function getTIDByReportData(data: string) {
   };
 }
 
-function hexToBinaryPosition(hexString: string) {
-  // 将十六进制字符串转换为二进制字符串
-  const binaryStringList = parseInt(hexString, 16).toString(2).split("").reverse();
 
-  // 找到二进制中第一个 '1' 出现的位置
-  const position = binaryStringList.indexOf("1") + 1;
 
-  // 返回 '1' 的位置
-  return position;
-}
+// function hexToBinaryPosition(hexString: string) {
+//   console.log('🚀 - hexToBinaryPosition - hexString:', hexString)
+//   // 将十六进制字符串转换为二进制字符串
+//   const binaryStringList = parseInt(hexString, 16).toString(2).split("").reverse();
+//   console.log('🚀 - hexToBinaryPosition - binaryStringList:', binaryStringList)
+
+//   // 找到二进制中第一个 '1' 出现的位置
+//   const position = binaryStringList.indexOf("1") + 1;
+//   console.log('🚀 - hexToBinaryPosition - position:', position)
+
+//   // 返回 '1' 的位置
+//   return position;
+// }
