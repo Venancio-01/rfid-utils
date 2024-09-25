@@ -115,11 +115,8 @@ export function getTIDByReportData(data: string) {
   const TID = str.substring(8 + EPCLength + MidCommandLength + TIDLengthCommandLength, 8 + EPCLength + MidCommandLength + TIDLengthCommandLength + TIDLength);
 
   const antennaIdStr = str.slice(8 + EPCLength + 4, 8 + EPCLength + 4 + 2);
-  console.log('🚀 - getTIDByReportData - antennaIdStr:', antennaIdStr)
 
-  // const antennaId = hexToBinaryPosition(antennaIdStr);
   const antennaId = parseInt(antennaIdStr)
-  console.log('🚀 - getTIDByReportData - antennaId:', antennaId)
 
   // 返回TID
   return {

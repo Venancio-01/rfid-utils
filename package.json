@@ -4,7 +4,7 @@
   "description": "A utility library for RFID operations in TypeScript.",
   "author": "liqingshan",
   "license": "MIT",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "type": "module",
   "types": "./dist/rfid-utils.d.ts",
   "main": "./dist/rfid-utils.js",
@@ -21,7 +21,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "vitest"
+    "test": "vitest",
+    "publish": "npm publish --access public"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.8",
@@ -38,5 +39,8 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21"
+  },
+  "peerDependencies": {
+    "lodash-es": "^4.17.21" 
   }
 }

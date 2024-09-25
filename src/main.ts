@@ -47,7 +47,7 @@ export function getTIDList(data: string, antennaIds?: number[]): string[] {
   } else {
     const allData = reportData.map(item => getTIDByReportData(item));
     const filteredData = allData.filter(item => antennaIds.includes(item.antennaId));
-    const TIDList = uniqBy(filteredData,'TID').map(item => item.TID);
+    const TIDList = uniqBy(filteredData, "TID").map((item: { TID: string, antennaId: number }) => item.TID);
 
     return TIDList;
   }
