@@ -26,9 +26,9 @@ export function getTIDList(data: string, antennaIds?: number[]): string[] {
 
 
 // 根据上报数据解析读写器功率
-export function parseReaderPower(data: string): { antennaPort: number; power: number }[] {
+export function parseReaderPower(data: string): Record<number, number> {
   // 假设 data 是一个字符串，格式如 "5A000102020008011E021E031E041E34D2"
-  const powerData: { antennaPort: number; power: number }[] = [];
+  const powerData: Record<number, number> = {};
   
   // 移除前缀 "5A00010202" 和后缀 CRC 校验码（最后4个字符）
   const cleanData = data.slice(10, -4);
@@ -42,7 +42,7 @@ export function parseReaderPower(data: string): { antennaPort: number; power: nu
   for (let i = 0; i < actualData.length; i += 4) {
     const antennaPort = parseInt(actualData.slice(i, i + 2), 16);
     const power = parseInt(actualData.slice(i + 2, i + 4), 16);
-    powerData.push({ antennaPort, power });
+    powerData[antennaPort] = power;
   }
   
   return powerData;

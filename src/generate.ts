@@ -48,11 +48,15 @@ export function generateQueryReaderPowerCommand() {
 
 
 // 生成配置读写器功率命令
-export function generateConfigureReaderPowerCommand(power: number) {
-  const protocolControlWord = "00011112";
-  const dataLength = "0004";
-  const body = power.toString(16).padStart(8, "0");
+export function generateConfigureReaderPowerCommand(power: Record<string, number>) {
+  const protocolControlWord = "00010201";
+  const dataLength = "0008";
+  const body = Object.entries(power).map(([key, value]) => 
+    Number(key).toString(16).padStart(2, "0") + value.toString(16).padStart(2, "0")
+  ).join("");
   const str = protocolControlWord + dataLength + body;
 
   return generateCommand(str);
 }
+
+

@@ -7,7 +7,7 @@ const libName = "rfid-utils"
 
 export default [
   {
-    input: 'src/main.ts',  // 入口文件
+    input: 'src/index.ts',  // 入口文件
     output: [
       {
         file: `dist/${libName}.js`,
@@ -25,7 +25,7 @@ export default [
     ]
   },
   {
-    input: 'src/main.ts',  // 入口文件
+    input: 'src/index.ts',  // 入口文件
     output: [
       {
         file: `dist/${libName}.d.ts`,

@@ -1,24 +1,28 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2022",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "outDir": "./dist",
     "lib": [
-      "ES2020"
+      "ES2022",
     ],
     "skipLibCheck": true,
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    /* 模块解析 */
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "esModuleInterop": true,
     "noEmit": false,
     "importHelpers": true,
-    /* Linting */
+    /* 类型检查 */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    /* 高级选项 */
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"
